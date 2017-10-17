@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MVC.Model.DataBase.Model.Preferencia>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index das Preferências</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { idUsuario = ViewData["idUsuario"] })   |   
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</p>
+
+<div class="col-sm-9 padding-right">
+    <div class="features_items">
+        <h2 class="title text-center">Itens Preferidos</h2>
+        <div class="col-sm-3">
+            <div class="left-sidebar">
+                <h2>Categorias</h2>
+                <div class="panel-group category-products" id="accordian">
+                    @foreach (var categoria in ViewBag.Categorias)
+            {
+                string nome = categoria.Nome;
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    @Html.ActionLink(nome, "ProdutosPorCategoria", new { id = categoria.Id, page = 1, pageSize = 9 })
+                                </h4>
+                                <p>
+                                    @Html.ActionLink("Delete", "DeletePorCategoria", new { idCategoria = categoria.Id })
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <h2>Marcas</h2>
+                <div class="panel-group category-products" id="accordian">
+                    @foreach (var fabricante in ViewBag.Fabricantes)
+            {
+                string nome = fabricante.razao_social;
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    @Html.ActionLink(nome, "ProdutosPorMarca", new { id = fabricante.Id, page = 1, pageSize = 9 })
+                                </h4>
+                                <p>
+                                    @Html.ActionLink("Delete", "DeletePorFabricante", new { idFabricante = fabricante.Id })
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@model MVC.Model.DataBase.Model.Endereco
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Novo Endereço</h2>
+
+
+<div class="shopper-informations">
+    <div class="">
+        <div class="col-md-3">
+            <h3>DADOS CADASTRAIS</h3>
+            <div class="shopper-info">
+                @using (Html.BeginForm("SaveEndereco", "Enderecos", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })<br />
+
+                    @Html.LabelFor(model => model.Cep)
+                    @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @onblur = "pesquisacep(this.value)" } })
+                    
+                    @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })<br />
+
+
+                    @Html.LabelFor(model => model.Numero)
+                    @Html.EditorFor(model => model.Numero)
+                    @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })<br />
+
+                    @Html.LabelFor(model => model.Rua)
+                    @Html.EditorFor(model => model.Rua)
+                    @Html.ValidationMessageFor(model => model.Rua, "", new { @class = "text-danger" })<br />
+
+                    @Html.LabelFor(model => model.Bairro)
+                    @Html.EditorFor(model => model.Bairro)
+                    @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })<br />
+
+                    @Html.LabelFor(model => model.Cidade)
+                    @Html.EditorFor(model => model.Cidade)
+                    @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })<br />
+
+                    @Html.LabelFor(model => model.Estado)
+                    @Html.EditorFor(model => model.Estado)
+                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+
+                    <input type="submit" class="btn btn-primary" style="margin-top:40px;" value="Salvar" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>

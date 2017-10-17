@@ -1,0 +1,170 @@
+﻿@model IEnumerable<MVC.Model.DataBase.Model.ItemCarrinho>
+@{
+    ViewBag.Title = "Carrinho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var total = 0;
+}
+
+<h2>Carrinho de compras</h2>
+
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Shopping Cart</li>
+            </ol>
+        </div>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Produtos</td>
+                        <td class="description"></td>
+                        <td class="price">Unitário</td>
+                        <td class="quantity">Quantidade</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <span style="display:none">@total += @item.Total</span>
+                        <tr>
+
+                            <td class="cart_product">
+                                <a href="@Url.Action("DetalhesProduto","Home",new {id = item.Produto.Id })"><img class="img-cart" src="~/Content/img/@item.Produto.FotosProduto.FirstOrDefault().Imagem" alt=""></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">@item.Produto.Nome</a></h4>
+                                <p>Código: @item.Produto.Id</p>
+                            </td>
+                            <td class="cart_price">
+                                <p>R$ @item.Produto.Valor</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    @using (Html.BeginForm("AtualizarItem", "Home"))
+                                    {
+                                        <input type="hidden" name="idProduto" value="@item.Produto.Id" />
+                                        <input class="cart_quantity_input" id="@item.Produto.Id" required type="text" name="quantity" min="1" value="@item.Quantidade" autocomplete="off" size="2">
+                                        <button class="btn btn-fefault cart" type="submit"><i class="fa fa-refresh"></i>Atualizar</button>
+                                    }
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">R$ @item.Total</p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="@Url.Action("RemoverItemDoCarrinho","Home",new { id = item.Produto.Id})"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section> <!--/#cart_items-->
+@if (Model.Count() > 0)
+{
+    <section id="do_action">
+        <div class="container">
+
+            <div class="row">
+                @using (Html.BeginForm("FinalizarPedido", "Home"))
+                {
+
+                    if (Session["Cliente"] != null)
+                    {
+                        <div class="col-sm-6">
+                            <div class="chose_area">
+                                <div style="margin:5px;">
+                                    <h4>Endereço da entrega</h4>
+
+                                    <select name="endereco">
+                                        @foreach (var end in ViewBag.Enderecos)
+                                        {
+                                            <option value="@end.Id">@end</option>
+                                        }
+                                    </select>
+                                    <a class="btn btn-default check_out" data-toggle="modal" data-target="#myModal" href="">Adicionar outro endereço</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <ul>
+                                <li>Total dos produtos <span>R$ @ViewData["total"]</span></li>
+                                <li>Frete: <span>R$ 10,00</span></li>
+                                <li>Valor total: <span>R$ @ViewData["total_frete"]</span></li>
+                            </ul>
+                            @if (Session["Cliente"] != null)
+                            {
+                                <input type="submit" class="btn btn-default check_out" value="Finalizar pedido" />
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("CreateCliente","Cliente")" class="btn btn-default check_out">Faça login para continuar</a>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+
+    </section><!--/#do_action-->
+}
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Novo endereço</h4>
+            </div>
+            <div class="modal-body">
+                <div class="shopper-info">
+                    @using (Html.BeginForm("SalvarEnderecoCarrinho", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })<br />
+
+                        <label>Cep</label>
+                        <input type="text" required name="cep" id="Cep" onblur="pesquisacep(this.value)" />
+
+                                    <label>Número</label>
+                                    <input type="number" required name="numero" />
+
+                                    <label>Rua</label>
+                                    <input type="text" readonly name="Rua" id="Rua" />
+
+                                    <label>Bairro</label>
+                                    <input type="text" readonly name="Bairro" id="Bairro" />
+
+                                    <label>Cidade</label>
+                                    <input type="text" readonly name="Cidade" id="Cidade" />
+
+                                    <label>Estado</label>
+                                    <input type="text" readonly name="Estado" id="Estado" />
+
+                                    <input type="submit" class="btn btn-primary" style="margin-top:40px;" value="Salvar" />
+                    }
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+            </div>
+        </div>
+
+    </div>
+</div>

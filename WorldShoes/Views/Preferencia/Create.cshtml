@@ -1,0 +1,48 @@
+﻿@model MVC.Model.DataBase.Model.Preferencia
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var nomeCategoria = "";
+    var razaoFabricante = "";
+}
+
+<h2>Create Preferência</h2>
+<h3>Click em algo de sua preferência</h3>
+
+<div class="col-sm-3">
+    <div class="left-sidebar">
+        <h2>Categorias</h2>
+        <div class="panel-group category-products" id="accordian">
+            @foreach (var categoria in ViewBag.Categorias)
+            {
+                nomeCategoria = categoria.Nome;
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            @Html.ActionLink(nomeCategoria, "preferenciaCategoria", new { idCategoria = categoria.Id, idUsuario = ViewData["idUsuario"] })
+                        </h4>
+                    </div>
+                </div>
+            }
+        </div>
+        <h2>Marcas</h2>
+        <div class="panel-group category-products" id="accordian">
+            @foreach (var fabricante in ViewBag.Fabricantes)
+            {
+                razaoFabricante = fabricante.razao_social;
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            @Html.ActionLink(razaoFabricante, "preferenciaFabricante", new { idFabricante = fabricante.Id, idUsuario = ViewData["idUsuario"] })
+                        </h4>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Home", "Index", "Home")
+</div>

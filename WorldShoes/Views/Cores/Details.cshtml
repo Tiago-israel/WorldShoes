@@ -1,0 +1,27 @@
+﻿@model MVC.Model.DataBase.Model.Cor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Cor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            <div style="background-color:@Model.Nome;" class="circulo"></div>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" }) |
+    @Html.ActionLink("Voltar à lista", "Index", null, new { @class = "btn btn-default" })
+</p>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MVC.Model.DataBase.Model.HistoricoBusca>
+@{
+    ViewBag.Title = "HistoricoBuscas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>HistoricoBuscas</h2>
+
+@foreach(var item in Model)
+{
+    <div>
+        <p>Busca: @item.Titulo  | Data: @item.Data  | Termos: @item.Termo</p>
+        <hr/>
+    </div>
+}

@@ -1,0 +1,9 @@
+﻿.body-admin{
+    padding-top: 10px;
+}
+.circulo{
+	width: 30px;
+	height: 30px;
+	border-radius:30px;
+	border: 1px solid black;
+}

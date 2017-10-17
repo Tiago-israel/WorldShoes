@@ -1,0 +1,103 @@
+﻿@model MVC.Model.DataBase.Model.Produto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Detalhes</h2>
+<div class="row">
+    <div class="col-md-3">
+        <h4>Produto</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Valor)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Valor)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Peso)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Peso)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Estoque)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Estoque)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Tamanho)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Tamanho)
+            </dd>
+            <dt>
+                Categoria
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Categoria.Nome)
+            </dd>
+            <dt>
+                Gênero
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Genero.Nome)
+            </dd>
+            <dt>
+                Cor
+            </dt>
+
+            <dd>
+                <div style="background-color:@Model.Cor.Nome" class="circulo"></div>
+            </dd>
+            <dt>
+                Fabricante
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Fabricante.razao_social)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-9">
+        @foreach (var item in Model.FotosProduto)
+        {
+            <div class="col-md-3">
+                <img src="~/Content/img/@item.Imagem" class="img-responsive img-thumbnail" />
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink("Voltar à lista", "Index", null, new { @class = "btn btn-default" })
+    </p>
+</div>
+

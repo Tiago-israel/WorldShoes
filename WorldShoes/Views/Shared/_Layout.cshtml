@@ -1,0 +1,340 @@
+﻿@{
+    ViewBag.User = (MVC.Model.DataBase.Model.Usuario)Session["Cliente"];
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - WorldShoes</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/site")
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i> info@dominio.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+
+        <div class="header-middle">
+            <!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                        </div>
+                        <div class="btn-group pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                    BRA
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Estados Unidos</a></li>
+                                    <li><a href="#">Reino Unido</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                    REAIS
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">DÓLAR</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                @if (ViewBag.User != null)
+                                {
+                                    <li><a href="@Url.Action("EditCliente","Cliente",new {id = ViewBag.User.Id })"><i class="fa fa-user"></i> Conta</a></li>
+                                }
+                                @*<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>*@
+                                <li><a href="#"><i class="fa fa-crosshairs"></i> Confira</a></li>
+                                <li><a href="@Url.Action("Carrinho","Home")"><i class="fa fa-shopping-cart"></i> Carrinho</a></li>
+                                @if (ViewBag.User == null)
+                                {
+                                    <li><a href="@Url.Action("CreateCliente","Cliente")"><i class="fa fa-lock"></i> Login</a></li>
+                                }
+                                @if (ViewBag.User != null)
+                                {
+                                    <li>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                                @ViewBag.User.Nome
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#"><i class="fa fa-shopping-cart"></i>Meus Pedidos</a></li>
+                                                <li><a href="#"><i class="fa fa-address-book-o"></i>Endereço</a></li>
+                                                <br />
+                                                <li><a href="@Url.Action("logoff", "Cliente")"><i class="fa fa-power-off"></i>Sair</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Alternar Navegação</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li>@Html.ActionLink("Home", "Index", "Home") </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+
+
+                        @using (Html.BeginForm("ProdutosPorDescricao", "Home", FormMethod.Get, new { @class = "searchform" }))
+                        {
+                            <div class="search_box pull-right">
+
+                                <input type="text" placeholder="Buscar" name="busca" style="float:left" />
+                                @*<input type="submit" value="Buscar"  style="float:left" class="btn btn-lg"/>*@
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-bottom-->
+    </header><!--/header-->
+    <section>
+        <div class="container">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+    </section>
+    <footer id="footer">
+        <!--Footer-->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="companyinfo">
+                            <h2><span>World</span>-Shoes</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="col-sm-3">
+                            <div class="video-gallery text-center">
+                                <a href="#">
+                                    <div class="iframe-img">
+                                        <img src="images/home/iframe1.png" alt="" />
+                                    </div>
+                                    <div class="overlay-icon">
+                                        <i class="fa fa-play-circle-o"></i>
+                                    </div>
+                                </a>
+                                <p>Novo Tênis Reef</p>
+                                <h2>25 DEZ 2017</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="video-gallery text-center">
+                                <a href="#">
+                                    <div class="iframe-img">
+                                        <img src="images/home/iframe2.png" alt="" />
+                                    </div>
+                                    <div class="overlay-icon">
+                                        <i class="fa fa-play-circle-o"></i>
+                                    </div>
+                                </a>
+                                <p>Nossa Loja</p>
+                                <h2>20 DEZ 2014</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="video-gallery text-center">
+                                <a href="#">
+                                    <div class="iframe-img">
+                                        <img src="images/home/iframe3.png" alt="" />
+                                    </div>
+                                    <div class="overlay-icon">
+                                        <i class="fa fa-play-circle-o"></i>
+                                    </div>
+                                </a>
+                                <p>Nova Sandália</p>
+                                <h2>20 DEZ 2014</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="video-gallery text-center">
+                                <a href="#">
+                                    <div class="iframe-img">
+                                        <img src="images/home/iframe4.png" alt="" />
+                                    </div>
+                                    <div class="overlay-icon">
+                                        <i class="fa fa-play-circle-o"></i>
+                                    </div>
+                                </a>
+                                <p>Novo Tênis Esportivo</p>
+                                <h2>20 DEZ 2014</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="address">
+                            <img src="images/home/map.png" alt="" />
+                            <p>Av. Rio Branco 2560, Juiz de Fora - MG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-widget">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Serviços</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Ajuda Online</a></li>
+                                <li><a href="#">Entre em Contato</a></li>
+                                <li><a href="#">Status do Pedido</a></li>
+                                <li><a href="#">Mudar Lolização</a></li>
+                                <li><a href="#">Perguntas Frequentes</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Compra Rápida</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Camisas</a></li>
+                                <li><a href="#">Homem</a></li>
+                                <li><a href="#">Mulher</a></li>
+                                <li><a href="#">Cartãos de Presente</a></li>
+                                <li><a href="#">Sapatos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Políticas</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Termos de Uso</a></li>
+                                <li><a href="#">Políticas de Privacidade</a></li>
+                                <li><a href="#">Políticas de Devolução</a></li>
+                                <li><a href="#">Sistema de Faturamento</a></li>
+                                <li><a href="#">Sistema de Tickets</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="single-widget">
+                            <h2>Sobre a WorldShoes</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Informações da Empresa</a></li>
+                                <li><a href="#">Carreiras</a></li>
+                                <li><a href="#">Localização da Loja</a></li>
+                                <li><a href="#">Programas Afiliados</a></li>
+                                <li><a href="#">Direitos Autorais</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-sm-offset-1">
+                        <div class="single-widget">
+                            <h2>Sobre a WorldShoes</h2>
+                            <form action="#" class="searchform">
+                                <input type="text" placeholder="Seu e-mail" />
+                                <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                <p>Receba as atualizações mais recentes <br /> sobre nossa loja e se mantenha atualizado!</p>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-left">@DateTime.Now.Year © WorldShoes LTDA. Todos direitos reservados.</p>
+                    <p class="pull-right">
+                        Desenvolvido por:
+                        <span><a target="_blank" href="#">Yuri Bisaggio</a></span>
+                        <span><a target="_blank" href="#">Tiago Israel</a></span>
+                        <span><a target="_blank" href="#">Flávio Geraldo</a></span>
+                        <span><a target="_blank" href="#">Ronaldo Pereira</a></span>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </footer><!--/Footer-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/sitejs")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.maskedinput.js" type="text/javascript"></script>
+    <script src="~/Scripts/BuscaCep.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Cpf').mask('999.999.999-99');
+            $('#Cep').mask('99999-999');
+        });
+    </script>
+</body>
+</html>
